@@ -1,11 +1,13 @@
 const express = require('express');
 const cors = require("cors");
+const bodyParser = require('body-parser')
 const fs = require('fs');
 const path = require('path');
 const app = express();
-
+const readline = require('readline');
 const MIDA = 12;
 const PORT = 3000;
+
 
 app.listen (PORT, ()=>{
     console.log("Web Server Running ["+PORT+"]");
@@ -18,12 +20,12 @@ app.use(cors({
     }
 }));
 
+app.use(express.json());
+
 //funcion solo para generar el pwd
 app.post("/generatePWD", (req,res) =>{
-    req.body.nombredelavariable
     console.log("Entro al server")
     let password=""
-    const MIDA = 12
     for (i=0; i < MIDA; i++){
         let numAscii
         let caracterPassword 
@@ -44,18 +46,40 @@ app.post("/generatePWD", (req,res) =>{
         password = password + caracterPassword
     }
     console.log(password)
-    console.log(password)
     res.send(JSON.stringify(password)) 
 })
 
 //funcion para encriptar y almacenar en un fichero el pwd
 app.post("/savePWD", (req,res) =>{
-   
-    res.send(JSON.stringify()) 
+    let data = req.body.username + " " + req.body.clave + " " + req.body.password + "\n"
+    fs.writeFile("passwords.txt", data, { flag: 'a' },(err) => {
+        if (err){
+          console.log(err);
+          res.send("0")
+        }
+        else {
+          res.send("1")
+        }
+    });
 })
 
 //funcion para listar todos los pwd de un usuario
 app.post("/listPWD", (req,res) =>{
+    result =[]
     
-    res.send(JSON.stringify()) 
+    const fileStream = fs.createReadStream('passwords.txt');
+
+    const rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity
+    });
+    rl.on('line', (line) => {
+        if (line.includes(req.body.username)) {
+            result.push(line);
+        }
+        });
+    rl.on('close', () => {
+        console.log(result)
+        res.send(JSON.stringify(result))
+    });
 })
