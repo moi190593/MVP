@@ -18,6 +18,7 @@ app.use(cors({
     }
 }));
 
+//funcion solo para generar el pwd
 app.post("/generatePWD", (req,res) =>{
     req.body.nombredelavariable
     console.log("Entro al server")
@@ -35,4 +36,16 @@ app.post("/generatePWD", (req,res) =>{
     }*/
     password = "AbC123+-"
     res.send(JSON.stringify(password)) 
+})
+
+//funcion para encriptar y almacenar en un fichero el pwd
+app.post("/savePWD", (req,res) =>{
+   
+    res.send(JSON.stringify()) 
+})
+
+//funcion para listar todos los pwd de un usuario
+app.post("/listPWD", (req,res) =>{
+    
+    res.send(JSON.stringify()) 
 })
