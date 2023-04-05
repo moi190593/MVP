@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const app = express();
 
-const MIDA = 10;
+const MIDA = 12;
 const PORT = 3000;
 
 app.listen (PORT, ()=>{
@@ -22,19 +22,29 @@ app.use(cors({
 app.post("/generatePWD", (req,res) =>{
     req.body.nombredelavariable
     console.log("Entro al server")
-    let password = null;
-    console.log(String.fromCharCode(65,66,67,105))
-   /* for (i=0; i < MIDA; i++){
-        if(i < MIDA/2){
-            numRandom = Math.floor(Math.random() * 9);
-
-            password = password + numRandom
-        }else{          
-            letrarandom
-            password
+    let password=""
+    const MIDA = 12
+    for (i=0; i < MIDA; i++){
+        let numAscii
+        let caracterPassword 
+        if(i < 3){
+            //letras mayusculas
+            numAscii = Math.floor(Math.random() * (90 - 65)+ 65);
+        }else if(i>=3 && i<6){          
+            //letras minusculas
+            numAscii = Math.floor(Math.random() * (122 - 97)+ 97);
+        }else if(i>=6 && i<9){          
+            //numeros
+            numAscii = Math.floor(Math.random() * (57 - 48)+ 48);
+        }else{
+            //caracter raro
+            numAscii = Math.floor(Math.random() * (47 - 33)+ 33);
         }
-    }*/
-    password = "AbC123+-"
+        caracterPassword= String.fromCharCode(numAscii)
+        password = password + caracterPassword
+    }
+    console.log(password)
+    console.log(password)
     res.send(JSON.stringify(password)) 
 })
 
