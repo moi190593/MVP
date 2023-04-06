@@ -51,7 +51,13 @@ app.post("/generatePWD", (req,res) =>{
 
 //funcion para encriptar y almacenar en un fichero el pwd
 app.post("/savePWD", (req,res) =>{
-    let data = req.body.username + " " + req.body.clave + " " + req.body.password + "\n"
+    let data
+    if(req.body.clave == ""){
+        data = req.body.username + " - " + req.body.password + "\n"
+    } else {
+        data = req.body.username + " - " + req.body.clave + " - " + req.body.password + "\n"
+    }
+    
     fs.writeFile("passwords.txt", data, { flag: 'a' },(err) => {
         if (err){
           console.log(err);

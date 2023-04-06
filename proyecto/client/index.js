@@ -7,7 +7,9 @@ const app = new Vue({
         key: "",
         user: "",
         message: "",
-        snackbar: false
+        snackbar: false,
+        pantalla1: true,
+        pantalla2: false
     },
     methods: {
         generatePWD: function() {
@@ -64,7 +66,7 @@ const app = new Vue({
             }else{
                 if(this.user == ""){
                     this.snackbar = true;
-                    this.message = "Necesitamos saber su nombre!"
+                    this.message = "Necesitamos saber su nombre para vincular la contraseña con usted!"
                 }else{
                     this.snackbar = true;
                     this.message = "Necesita crear una contraseña!"
@@ -90,6 +92,8 @@ const app = new Vue({
                         this.snackbar = true
                         this.message = "No se ha podido leer el fichero"
                     }else{
+                        this.pantalla1 = false
+                        this.pantalla2 = true
                         this.passwords = data
                     }
 
@@ -98,9 +102,12 @@ const app = new Vue({
                 });
             }else{
                 this.snackbar = true;
-                this.message = "Necesitamos saber su nombre!"
+                this.message = "Necesitamos saber su nombre para buscar SUS contraseñas!"
             }
             
+        }, changeScreen: function(){
+            this.pantalla1 = true
+            this.pantalla2 = false
         }
 
     }

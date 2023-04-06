@@ -30,14 +30,14 @@
 
 <body>
     <v-app id="app">
-        <v-container>
+        <v-container v-if="this.pantalla1 == true">
             <v-row>
                 <v-col cols="12" md="6" class="mx-auto">
                   <v-card>
                     <v-card-title class="text-h5">PASSWORD GENERATOR</v-card-title>
                     <v-card-text>
-                        <h4>ESTA APLICACION LE PERMITE CREAR CONTRASEÑAS ALEATORIAS Y GUARDARLAS CON TOTAL SEGURIDAD!</h4>
-                        <h4>ADEMAS, PUEDE CONSULTARLAS EN QUALQUIER MOMENTO!</h4>
+                        <h4>ESTA APLICACIÓN LE PERMITE CREAR CONTRASEÑAS ALEATORIAS Y GUARDARLAS CON TOTAL SEGURIDAD!</h4>
+                        <h4>ADEMÁS, PUEDE CONSULTARLAS EN QUALQUIER MOMENTO!</h4>
                         <v-row>
                             <v-col cols="6" xs="12">
                                 <v-text-field v-model="user" label="Escriba aquí su nombre por favor" required></v-text-field>
@@ -63,12 +63,12 @@
                             </v-row>
                             <v-row>
                                 <v-col cols="12">    
-                                    <v-btn @click="savePWD" color="secondary">CLICK AQUI PARA GUARDAR LA CONTRASEÑA</v-btn>
+                                    <v-btn @click="savePWD" color="secondary">CLICK AQUÍ PARA GUARDAR LA CONTRASEÑA</v-btn>
                                 </v-col>
                             </v-row>
                             <v-row>
                                 <v-col cols="12" >
-                                    <v-btn @click="listPWD" color="green">CLICK AQUI PARA VER TODAS SUS CONTRASEÑAS</v-btn>
+                                    <v-btn @click="listPWD" color="green">CLICK AQUÍ PARA VER TODAS SUS CONTRASEÑAS</v-btn>
                                 </v-col>
                             </v-row>
                             <v-snackbar
@@ -81,15 +81,25 @@
                         
                     </v-card-actions>  
                     </v-card>
-                    <v-row v-for="pwd in passwords">
-                        <v-card class="card-size selectable d-flex flex-column justify-center align-center">
-                            {{ pwd }}
-                        </v-card>
-                    </v-row>
+                    
                 </v-col>
                 
               </v-row>
         </v-container>
+        <v-contariner v-if="this.pantalla2==true">
+            <v-col cols="12" md="6" class="mx-auto">
+                <v-row>
+                    <v-col cols="12">    
+                        <v-btn @click="changeScreen" color="secondary">VOLVER A LA PANTALLA ANTERIOR</v-btn>
+                    </v-col>
+                </v-row>
+                <v-row v-for="pwd in passwords">
+                    <v-card>
+                        {{ pwd }}
+                    </v-card>
+                </v-row>
+            </v-col>
+        </v-contariner>
     </v-app>
     <script src="index.js"></script>
 </body>
