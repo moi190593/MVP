@@ -1,8 +1,6 @@
 const express = require('express');
 const cors = require("cors");
-const bodyParser = require('body-parser')
 const fs = require('fs');
-const path = require('path');
 const app = express();
 const readline = require('readline');
 const MIDA = 12;
@@ -15,7 +13,7 @@ app.listen (PORT, ()=>{
 
 app.use(cors({ 
     credentials: true,
-    origin: function(origin, callback){
+    origin: function(callback){
         return callback(null, true)
     }
 }));
@@ -23,7 +21,7 @@ app.use(cors({
 app.use(express.json());
 
 //funcion solo para generar el pwd
-app.post("/generatePWD", (req,res) =>{
+app.post("/generatePWD", (res) =>{
     let password=""
     for (i=0; i < MIDA; i++){
         let numAscii
