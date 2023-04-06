@@ -45,7 +45,7 @@ for(i = 0; i < arrayPassword.length ; i++){
 console.log(arrayPassword)
 
 //Encripta la contraseña 
-for(i = 0 ; i < arrayPassword.length ; i++){
+for(i = 0 ; i < arrayPassword.length + 1; i++){
     for(j = 0 ; j < arrayPassword.length ; j++){
         salidaEncriptada = salidaEncriptada + arrayPassword[j][i];
     }

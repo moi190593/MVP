@@ -24,7 +24,6 @@ app.use(express.json());
 
 //funcion solo para generar el pwd
 app.post("/generatePWD", (req,res) =>{
-    console.log("Entro al server")
     let password=""
     for (i=0; i < MIDA; i++){
         let numAscii
@@ -45,17 +44,40 @@ app.post("/generatePWD", (req,res) =>{
         caracterPassword= String.fromCharCode(numAscii)
         password = password + caracterPassword
     }
-    console.log(password)
     res.send(JSON.stringify(password)) 
 })
 
 //funcion para encriptar y almacenar en un fichero el pwd
 app.post("/savePWD", (req,res) =>{
+    let salidaEncriptada = ""
+    let saltos = 4
+    let password = req.body.password
     let data
+    let arrayPassword = [
+        ['','','',''],
+        ['','','',''],
+        ['','','','']
+    ];
+
+    //Añade caracter por caracter de la contraseña al array multidimensional
+    for(i = 0; i < arrayPassword.length ; i++){        
+        for(j = 0; j < saltos ; j++){
+            arrayPassword[i][j] = password.charAt(0);
+            password = password.substring(1);
+        }
+    }
+
+    //Encripta la contraseña 
+    for(i = 0 ; i < arrayPassword.length + 1; i++){
+        for(j = 0 ; j < arrayPassword.length ; j++){
+            salidaEncriptada = salidaEncriptada + arrayPassword[j][i];
+        }
+    }
+
     if(req.body.clave == ""){
-        data = req.body.username + " - " + req.body.password + "\n"
+        data = req.body.username + " - " + salidaEncriptada + "\n"
     } else {
-        data = req.body.username + " - " + req.body.clave + " - " + req.body.password + "\n"
+        data = req.body.username + " - " + req.body.clave + " - " + salidaEncriptada + "\n"
     }
     
     fs.writeFile("passwords.txt", data, { flag: 'a' },(err) => {
