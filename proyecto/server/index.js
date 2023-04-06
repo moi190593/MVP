@@ -74,12 +74,15 @@ app.post("/listPWD", (req,res) =>{
     result =[]
     
     const fileStream = fs.createReadStream('passwords.txt');
+    const readLength = 12;
 
     const rl = readline.createInterface({
     input: fileStream,
     crlfDelay: Infinity
     });
     rl.on('line', (line) => {
+        const last12Chars = line.slice(-readLength); //Esto obtiene los 12 ultimos caracteres de la linea, lo que hay que desencripitar
+        
         if (line.includes(req.body.username)) {
             result.push(line);
         }
