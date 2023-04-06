@@ -19,4 +19,38 @@ for (i=0; i < MIDA; i++){
     caracterPassword= String.fromCharCode(numAscii)
     password = password + caracterPassword
 }
-console.log(password)
+console.log("password: "+password)
+console.log(password.length)
+
+//let password = "123abg789zxc"//req.body.password
+let salidaEncriptada = ""
+let saltos = 4
+let fila = password.length/saltos
+
+let arrayPassword = [
+    ['','','',''],
+    ['','','',''],
+    ['','','','']
+];
+
+//Añade caracter por caracter de la contraseña al array multidimensional
+for(i = 0; i < arrayPassword.length ; i++){        
+    for(j = 0; j < saltos ; j++){
+        //if(password.length()==0) break;
+        arrayPassword[i][j] = password.charAt(0);
+        password = password.substring(1);
+    }
+}
+
+console.log(arrayPassword)
+
+//Encripta la contraseña 
+for(i = 0 ; i < arrayPassword.length ; i++){
+    for(j = 0 ; j < arrayPassword.length ; j++){
+        salidaEncriptada = salidaEncriptada + arrayPassword[j][i];
+    }
+}
+
+password = salidaEncriptada
+console.log("Password encriptado: "+password)
+console.log(password.length)
