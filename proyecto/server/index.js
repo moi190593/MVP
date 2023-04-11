@@ -13,7 +13,7 @@ app.listen (PORT, ()=>{
 
 app.use(cors({ 
     credentials: true,
-    origin: function(callback){
+    origin: function(origin, callback){
         return callback(null, true)
     }
 }));
@@ -21,7 +21,7 @@ app.use(cors({
 app.use(express.json());
 
 //funcion solo para generar el pwd
-app.post("/generatePWD", (res) =>{
+app.post("/generatePWD", (req, res) =>{
     let password=""
     for (i=0; i < MIDA; i++){
         let numAscii
@@ -101,10 +101,32 @@ app.post("/listPWD", (req,res) =>{
     crlfDelay: Infinity
     });
     rl.on('line', (line) => {
-        const last12Chars = line.slice(-readLength); //Esto obtiene los 12 ultimos caracteres de la linea, lo que hay que desencripitar
-        
         if (line.includes(req.body.username)) {
-            result.push(line);
+            let last12Chars = line.slice(-readLength); //Esto obtiene los 12 ultimos caracteres de la linea, lo que hay que desencripitar
+            let arrayPasswordDes = [
+                ['','','',''],
+                ['','','',''],
+                ['','','','']
+            ];
+    
+            //Añade caracter por caracter de la contraseña al array multidimensional/
+            for(i = 0; i< 4; i++){
+                for(j = 0; j<3 ; j++){
+                    arrayPasswordDes[j][i] = last12Chars.charAt(0);
+                    last12Chars = last12Chars.substring(1);
+                }
+            }
+            
+            let StringDES = "";
+            
+            //
+            for(i = 0; i<3 ;i++){
+                for(j = 0; j<4 ; j++){
+                    StringDES=StringDES + arrayPasswordDes[i][j]
+                }
+            }
+            let textoNuevo = line.slice(0, -12) + StringDES;
+            result.push(textoNuevo);
         }
         });
     rl.on('close', () => {
