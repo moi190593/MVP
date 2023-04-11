@@ -51,6 +51,8 @@ app.post("/savePWD", (req,res) =>{
     let saltos = 4
     let password = req.body.password
     let data
+    let nombre = req.body.username;
+    sinEspacios = nombre.trimStart().trimEnd();
     let arrayPassword = [
         ['','','',''],
         ['','','',''],
@@ -73,9 +75,9 @@ app.post("/savePWD", (req,res) =>{
     }
 
     if(req.body.clave == ""){
-        data = req.body.username + " - " + salidaEncriptada + "\n"
+        data = sinEspacios + " - " + salidaEncriptada + "\n"
     } else {
-        data = req.body.username + " - " + req.body.clave + " - " + salidaEncriptada + "\n"
+        data = sinEspacios + " - " + req.body.clave + " - " + salidaEncriptada + "\n"
     }
     
     fs.writeFile("passwords.txt", data, { flag: 'a' },(err) => {
@@ -92,7 +94,8 @@ app.post("/savePWD", (req,res) =>{
 //funcion para listar todos los pwd de un usuario
 app.post("/listPWD", (req,res) =>{
     result =[]
-    
+    nombre = req.body.username;
+    sinEspacios = nombre.trimStart().trimEnd();
     const fileStream = fs.createReadStream('passwords.txt');
     const readLength = 12;
 
@@ -101,7 +104,13 @@ app.post("/listPWD", (req,res) =>{
     crlfDelay: Infinity
     });
     rl.on('line', (line) => {
-        if (line.includes(req.body.username)) {
+        let index = line.indexOf("-");
+        let nomFinal = line.substring(0, index);
+        let nomFinalSinEspacios = nomFinal.trimEnd().trimStart();
+        console.log("FINAL = " + nomFinal + " " + nomFinal.length)
+        console.log("SINESPACIOS = " + sinEspacios + " " + sinEspacios.length)
+
+        if (nomFinalSinEspacios == sinEspacios) {
             let last12Chars = line.slice(-readLength); //Esto obtiene los 12 ultimos caracteres de la linea, lo que hay que desencripitar
             let arrayPasswordDes = [
                 ['','','',''],
@@ -131,6 +140,10 @@ app.post("/listPWD", (req,res) =>{
         });
     rl.on('close', () => {
         console.log(result)
-        res.send(JSON.stringify(result))
+        if(result.length == 0){
+            res.send("0")
+        }else{
+            res.send(JSON.stringify(result))
+        }     
     });
 })

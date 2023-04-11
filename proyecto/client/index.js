@@ -90,7 +90,7 @@ const app = new Vue({
                     console.log("DATA: " + data)
                     if(data == "0"){
                         this.snackbar = true
-                        this.message = "No se ha podido leer el fichero"
+                        this.message = "El nombre no existe en la base de datos"
                     }else{
                         this.pantalla1 = false
                         this.pantalla2 = true
