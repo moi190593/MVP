@@ -54,3 +54,27 @@ for(i = 0 ; i < arrayPassword.length + 1; i++){
 password = salidaEncriptada
 console.log("Password encriptado: "+password)
 console.log(password.length)
+
+let arrayPasswordDes = [
+    ['','','',''],
+    ['','','',''],
+    ['','','','']
+];
+
+for(i = 0; i< 4; i++){
+    for(j = 0; j<3 ; j++){
+        arrayPasswordDes[j][i] = password.charAt(0);
+        password = password.substring(1);
+    }
+}
+console.log(arrayPasswordDes)
+
+let StringDES = "";
+
+for(i = 0; i<3 ;i++){
+    for(j = 0; j<4 ; j++){
+        StringDES=StringDES + arrayPasswordDes[i][j]
+    }
+}
+
+console.log(StringDES)
