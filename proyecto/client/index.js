@@ -33,11 +33,13 @@ const app = new Vue({
             });
         },
         savePWD: function() {
-            if(this.user !="" && this.pwd !=""){
+            nombre = this.user;
+            nombre2 = nombre.trimStart().trimEnd();
+            if(nombre2 !="" && this.pwd !=""){
                 info = {
                     password: this.pwd,
                     clave: this.key,
-                    username: this.user
+                    username: nombre2
                 }
                 fetch("http://localhost:3000/savePWD", {
                     method: "POST",
@@ -64,7 +66,7 @@ const app = new Vue({
                     console.log(error)
                 });
             }else{
-                if(this.user == ""){
+                if(nombre2 == ""){
                     this.snackbar = true;
                     this.message = "Necesitamos saber su nombre para vincular la contraseña con usted!"
                 }else{
