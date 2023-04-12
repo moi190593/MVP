@@ -35,7 +35,7 @@ const app = new Vue({
         savePWD: function() {
             nombre = this.user;
             nombre2 = nombre.trimStart().trimEnd();
-            if(nombre2 !="" && this.pwd !=""){
+            if(nombre2 !="" && this.pwd !="" && nombre2.length < 21){
                 info = {
                     password: this.pwd,
                     clave: this.key,
@@ -69,10 +69,13 @@ const app = new Vue({
                 if(nombre2 == ""){
                     this.snackbar = true;
                     this.message = "Necesitamos saber su nombre para vincular la contraseña con usted!"
+                }else if(nombre2.length>20){
+                    this.snackbar = true;
+                    this.message = "El nombre máximo de carácteres para su nombres es 20!"
                 }else{
                     this.snackbar = true;
                     this.message = "Necesita crear una contraseña!"
-                }      
+                }        
             }
         },listPWD: function() {
             if(this.user != ""){
