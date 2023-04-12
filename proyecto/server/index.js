@@ -107,8 +107,6 @@ app.post("/listPWD", (req,res) =>{
         let index = line.indexOf("-");
         let nomFinal = line.substring(0, index);
         let nomFinalSinEspacios = nomFinal.trimEnd().trimStart();
-        console.log("FINAL = " + nomFinal + " " + nomFinal.length)
-        console.log("SINESPACIOS = " + sinEspacios + " " + sinEspacios.length)
 
         if (nomFinalSinEspacios == sinEspacios) {
             let last12Chars = line.slice(-readLength); 
