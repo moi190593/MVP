@@ -100,8 +100,8 @@ app.post("/listPWD", (req,res) =>{
     const readLength = 12;
 
     const rl = readline.createInterface({
-    input: fileStream,
-    crlfDelay: Infinity
+        input: fileStream,
+        crlfDelay: Infinity
     });
     rl.on('line', (line) => {
         let index = line.indexOf("-");
@@ -111,7 +111,7 @@ app.post("/listPWD", (req,res) =>{
         console.log("SINESPACIOS = " + sinEspacios + " " + sinEspacios.length)
 
         if (nomFinalSinEspacios == sinEspacios) {
-            let last12Chars = line.slice(-readLength); //Esto obtiene los 12 ultimos caracteres de la linea, lo que hay que desencripitar
+            let last12Chars = line.slice(-readLength); 
             let arrayPasswordDes = [
                 ['','','',''],
                 ['','','',''],
